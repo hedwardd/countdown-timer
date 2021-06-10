@@ -8,7 +8,7 @@ function App() {
     eventName: '',
     eventDate: '',
     eventTime: 0
-  })
+  });
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -21,7 +21,7 @@ function App() {
     const newState = {
       ...formValues,
       [name]: value
-    }
+    };
     setFormValues(newState);
   }
   

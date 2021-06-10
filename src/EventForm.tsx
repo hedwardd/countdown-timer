@@ -16,37 +16,37 @@ export default function EventForm({ formValues, handleSubmit, handleChange }: Pr
   return (
     <div>
       <form onSubmit={handleSubmit}>
-          <label>
+        <label>
             Event Name
-          </label>
-          <input
-            type="text"
-            name='eventName'
-            required
-            onChange={handleChange}
-            value={formValues.eventName}
-          />
+        </label>
+        <input
+          type="text"
+          name='eventName'
+          required
+          onChange={handleChange}
+          value={formValues.eventName}
+        />
 
-          <label>
+        <label>
             Date
-          </label>
-          <input
-            type="date"
-            name="eventDate"
-            required
-            onChange={handleChange}
-            value={formValues.eventDate}
-          />
+        </label>
+        <input
+          type="date"
+          name="eventDate"
+          required
+          onChange={handleChange}
+          value={formValues.eventDate}
+        />
 
-          <label>
+        <label>
             Time
-          </label>
-          <input
-            type="text"
-            name='eventTime'
-            onChange={handleChange}
-            value={formValues.eventTime}
-          />
+        </label>
+        <input
+          type="text"
+          name='eventTime'
+          onChange={handleChange}
+          value={formValues.eventTime}
+        />
         <input type="submit" />
       </form>
     </div>
