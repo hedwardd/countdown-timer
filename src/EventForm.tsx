@@ -47,7 +47,10 @@ export default function EventForm({ formValues, handleSubmit, handleChange }: Pr
           onChange={handleChange}
           value={formValues.eventTime}
         />
-        <input type="submit" />
+        <input
+          type="submit"
+          value="Start"
+        />
       </form>
     </div>
   );
