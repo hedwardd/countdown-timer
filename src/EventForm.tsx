@@ -7,51 +7,62 @@ interface PropTypes {
     eventTime: number
   },
   handleSubmit: React.FormEventHandler<HTMLFormElement>,
-  handleChange: React.ChangeEventHandler<HTMLInputElement>
-
+  handleChange: React.ChangeEventHandler<HTMLInputElement>,
+  formError: string | null,
 }
 
-export default function EventForm({ formValues, handleSubmit, handleChange }: PropTypes) {
+export default function EventForm({ formValues, handleSubmit, handleChange, formError }: PropTypes) {
+
+  const { eventName, eventDate, eventTime } = formValues;
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label>
+    <form className="event-form" onSubmit={handleSubmit}>
+      <label className="label">
             Event Name
-        </label>
-        <input
-          type="text"
-          name='eventName'
-          required
-          onChange={handleChange}
-          value={formValues.eventName}
-        />
+      </label>
+      <input
+        type="text"
+        name="eventName"
+        className="input"
+        required
+        onChange={handleChange}
+        value={eventName}
+      />
 
-        <label>
+      <label className="label">
             Date
-        </label>
-        <input
-          type="date"
-          name="eventDate"
-          required
-          onChange={handleChange}
-          value={formValues.eventDate}
-        />
+      </label>
+      <input
+        type="date"
+        name="eventDate"
+        className="input"
+        required
+        onChange={handleChange}
+        value={eventDate}
+      />
 
-        <label>
+      <label className="label">
             Time
-        </label>
-        <input
-          type="text"
-          name='eventTime'
-          onChange={handleChange}
-          value={formValues.eventTime}
-        />
-        <input
-          type="submit"
-          value="Start"
-        />
-      </form>
-    </div>
+      </label>
+      <input
+        type="number"
+        name="eventTime"
+        className="input"
+        max="23"
+        min="0"
+        step="1"
+        onChange={handleChange}
+        value={eventTime}
+      />
+      <input
+        type="submit"
+        value="Start"
+        className="submit"
+      />
+
+      {formError && (
+        <p className="error-text">{formError}</p>
+      )}
+    </form>
   );
 }

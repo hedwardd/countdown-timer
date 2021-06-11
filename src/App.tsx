@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
+import './App.css';
 import EventForm from './EventForm';
 import EventDisplay from './EventDisplay';
 
@@ -8,13 +9,16 @@ interface Event {
   date: number,
 }
 
+const defaultFormState = {
+  eventName: '',
+  eventDate: '',
+  eventTime: 0
+};
+
 function App() {
 
-  const [formValues, setFormValues] = useState({
-    eventName: '',
-    eventDate: '',
-    eventTime: 0
-  });
+  const [formValues, setFormValues] = useState(defaultFormState);
+  const [formError, setFormError] = useState<string | null>(null);
   const [event, setEvent] = useState<Event | null>(null);
   const [now, setNow] = useState(Date.now());
 
@@ -27,21 +31,26 @@ function App() {
     };
   }, []);
 
-
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const { eventName, eventDate, eventTime } = formValues;
     const [year, month, day] = eventDate.split('-').map(s => parseInt(s));
     const dateObject = new Date(year, month - 1, day, eventTime);
     const eventDatePrimitive = dateObject.valueOf();
-    setEvent({
-      name: eventName,
-      date: eventDatePrimitive
-    });
+    if (eventDatePrimitive > now) {
+      setEvent({
+        name: eventName,
+        date: eventDatePrimitive
+      });
+      setFormValues(defaultFormState);
+    } else {
+      setFormError('Date must be in the future.');
+    }
   }
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     event.preventDefault();
+    setFormError(null);
     const { target } = event;
     const { name, value } = target;
     const newState = {
@@ -50,19 +59,18 @@ function App() {
     };
     setFormValues(newState);
   }
-
-
   
   return (
-    <div>
+    <div id="App">
       <EventForm
         formValues={formValues}
         handleSubmit={handleSubmit}
         handleChange={handleChange}
+        formError={formError}
       />
-      <div>
-        {event ? <EventDisplay now={now} name={event.name} date={event.date} /> : null}
-      </div>
+      {event
+        ? <EventDisplay now={now} name={event.name} date={event.date} />
+        : null}
     </div>
   );
 }
