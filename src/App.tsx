@@ -19,7 +19,7 @@ function App() {
 
   const [formValues, setFormValues] = useState(defaultFormState);
   const [formError, setFormError] = useState<string | null>(null);
-  const [event, setEvent] = useState<Event | null>(null);
+  const [events, setEvents] = useState<Event[]>([]);
   const [now, setNow] = useState(Date.now());
 
   useEffect(() => {
@@ -38,10 +38,10 @@ function App() {
     const dateObject = new Date(year, month - 1, day, eventTime);
     const eventDatePrimitive = dateObject.valueOf();
     if (eventDatePrimitive > now) {
-      setEvent({
+      setEvents([...events, {
         name: eventName,
         date: eventDatePrimitive
-      });
+      }]);
       setFormValues(defaultFormState);
     } else {
       setFormError('Date must be in the future.');
@@ -68,9 +68,14 @@ function App() {
         handleChange={handleChange}
         formError={formError}
       />
-      {event
-        ? <EventDisplay now={now} name={event.name} date={event.date} />
-        : null}
+      {events.map(event => (
+        <EventDisplay
+          key={event.date}
+          now={now}
+          name={event.name}
+          date={event.date}
+        />
+      ))}
     </div>
   );
 }
