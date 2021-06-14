@@ -8,14 +8,14 @@ interface PropTypes {
 
 export default function EventDisplay({now, name, date}: PropTypes) {
   const differenceInMs = date - now;
-  const secondsAway = differenceInMs / 1000;
-  const minutesAway = secondsAway / 60;
-  const hoursAway = minutesAway / 60;
-  const daysAway = hoursAway / 24;
-  const displaySeconds = Math.floor(secondsAway % 60);
-  const displayMinutes = Math.floor(minutesAway % 60);
-  const displayHours = Math.floor(hoursAway % 24);
-  const displayDays = Math.floor(daysAway);
+  const secondsAway = (date - now > 0) ? Math.floor(differenceInMs / 1000) : 0;
+  const minutesAway = Math.floor(secondsAway / 60);
+  const hoursAway = Math.floor(minutesAway / 60);
+  const daysAway = Math.floor(hoursAway / 24);
+  const displaySeconds = secondsAway % 60;
+  const displayMinutes = minutesAway % 60;
+  const displayHours = hoursAway % 24;
+  const displayDays = daysAway;
 
   return (
     <div className="event">
